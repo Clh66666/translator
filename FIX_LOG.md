@@ -12,6 +12,7 @@
 - **问题**: 不必要的依赖
   - `tensorflow==1.15.0` → 翻译任务不需要
 **初步更改**
+```python
 pandas==2.0.0
 numpy
 requests==2.25.0
@@ -20,12 +21,16 @@ tqdm
 huggingface_hub=0.20.0
 python-dotenv==0.19.0
 tenacity  # 用于重试机制
+```
 
 **实际验证更改是否正确**
 新创建python环境translator_env，安装改后的依赖文件，全部正确安装，无冲突
+
 **运行时的验证**
 报错 pandas 和 numpy 版本不兼容
+
 **再次更改**
+```python
 pandas==1.5.3
 numpy==1.23.5
 requests==2.31.0
@@ -34,6 +39,7 @@ tqdm
 huggingface_hub==0.17.3
 python-dotenv==1.0.0
 tenacity==8.2.3
+```
 
 ### 2.代码问题
 - **问题1**：头文件导入问题，导入错误的依赖文件
@@ -59,7 +65,7 @@ tenacity==8.2.3
   - `max_tokens=20`:20个token约为10中文字符，不够翻译论文摘要，改为2048。
 - **异常处理**：添加 tenacity 重试机制
   - 在头文件添加`from tenacity import retry, stop_after_attempt, wait_exponential`
-  - def translate_text(text)函数前添加装饰器：@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+  - def translate_text(text)函数前添加装饰器：`@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))`
   - 最多重试3次，每次失败后分别等待4\8\10秒
 - **main函数**：需修改延迟时间和文件处理逻辑、引入进度显示
   - 用 tqdm 显示进度条
