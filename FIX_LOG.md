@@ -20,6 +20,7 @@ tqdm
 huggingface_hub=0.20.0
 python-dotenv==0.19.0
 tenacity  # 用于重试机制
+
 **实际验证更改是否正确**
 新创建python环境translator_env，安装改后的依赖文件，全部正确安装，无冲突
 **运行时的验证**
